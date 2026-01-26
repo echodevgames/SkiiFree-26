@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Splashes/BootUp.unity
+    guid: 0ef21542b406e23409140e4c8b7dda10
+  - enabled: 1
+    path: Assets/Scenes/Splashes/TeamSplash.unity
+    guid: 6d8e5d22cadf8d74aa9683f80cdc3e9a
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: a705945a04e31684eb2cff1b8e9c75fc
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0

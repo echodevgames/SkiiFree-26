@@ -1,0 +1,15 @@
+----------SkiiFree'26 Read-Me-----------
+Created By Jesse Adams - EchoDevGames@gmail.com 
+@echodevgames - echodevgames.bsky.social - https://echodevgames.itch.io/
+
+01/2026 Using Unity (Version 6.0000.3.1f1)
+
+Created as a case study to disect the old SkiiFree '91 game and make an emulation.
+Designed to demonstrate the ability to use Unity to emulate a classic style video game.
+The classic system actually moved a player and it's camera across a pre existing map.
+This new system moves spawned objects across the viewport after spawning them below it,
+and destroys them when they reach a destroy zone of the top of the screen.
+The system is current incomplete as of 1-26-2026, This is just the first build.
+
+
+

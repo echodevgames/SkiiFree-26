@@ -32,6 +32,13 @@ public class GameManager : MonoBehaviour
     int cachedHeadingIndex;
     int cachedHeadingDirection;
 
+    public enum GameState
+    {
+        Menu,
+        Playing
+    }
+    [Header("Menu")]
+    public GameState CurrentGameState { get; private set; } = GameState.Menu;
 
 
     public enum JumpState
@@ -73,6 +80,11 @@ public class GameManager : MonoBehaviour
     {
         // === SIDEWAYS LOCK STATE ===
         bool fullySideways = HeadingDegrees >= 90f;
+
+        if (CurrentGameState != GameState.Playing)
+            return;
+
+
         if (IsCrashed)
             return;
 
@@ -180,6 +192,21 @@ public class GameManager : MonoBehaviour
 
 
 
+    }
+    public void StartGame()
+    {
+        CurrentGameState = GameState.Playing;
+
+        Time.timeScale = 1f;   // Resume time
+
+        // Reset run state
+        HeadingIndex = 0;
+        HeadingDirection = 0;
+        SpinFrameIndex = 0;
+        CurrentJumpState = JumpState.Grounded;
+        IsCrashed = false;
+
+        Debug.Log("Game Started");
     }
 
     void StepHeading(int dir)
