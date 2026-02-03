@@ -437,94 +437,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skier Female Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 704
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5b44e7791011b9070800000000000000
-      internalID: 8114097852172354741
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 704
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ae5432511828888f0800000000000000
-      internalID: -538036664553749014
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 704
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9b87d0e88780ac200800000000000000
-      internalID: 200982447243753657
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 704
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0d570497b739e3a90800000000000000
-      internalID: -7332260984788060720
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Skier Female Sheet_8
       rect:
         serializedVersion: 2
@@ -608,50 +520,6 @@ TextureImporter:
       bones: []
       spriteID: d3c509dc0d0b489b0800000000000000
       internalID: -5078740068918600643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_12
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 640
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 96f9f66ebf3e35900800000000000000
-      internalID: 672131440450707305
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_13
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 640
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 82b59782e074aa870800000000000000
-      internalID: 8694840156726319912
       vertices: []
       indices: 
       edges: []
@@ -745,94 +613,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skier Female Sheet_18
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 576
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a96728e9a96718550800000000000000
-      internalID: 6161336171675940506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_19
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 576
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 971878d6180eae7b0800000000000000
-      internalID: -5194092373725445767
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_20
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 576
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8fe89ff9c79112a30800000000000000
-      internalID: 4188657151481843448
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_21
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 576
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 370202da91d51c0f0800000000000000
-      internalID: -1098494469241560973
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Skier Female Sheet_22
       rect:
         serializedVersion: 2
@@ -916,50 +696,6 @@ TextureImporter:
       bones: []
       spriteID: af1ba8a83fbe93a90800000000000000
       internalID: -7333571086962216454
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_26
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 512
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b1824bf02424fdd60800000000000000
-      internalID: 7917119521439361051
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_27
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 512
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 747030deec74e4180800000000000000
-      internalID: -9129280440568182969
       vertices: []
       indices: 
       edges: []
@@ -1053,50 +789,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skier Female Sheet_32
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 448
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 62c2dd37151750cb0800000000000000
-      internalID: -4898384425045382106
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_33
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 448
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 32fe56fc8daa11f20800000000000000
-      internalID: 3391679842555916067
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Skier Female Sheet_34
       rect:
         serializedVersion: 2
@@ -1136,72 +828,6 @@ TextureImporter:
       bones: []
       spriteID: 366dc6fb029c722d0800000000000000
       internalID: -3303450659165251997
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_36
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 384
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0b6f7b49cf36dde30800000000000000
-      internalID: 4529886736682579632
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_37
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 384
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d273e92358eefa170800000000000000
-      internalID: 8192028503057512237
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skier Female Sheet_38
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 384
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 05ef3e10fcd96d520800000000000000
-      internalID: 2726540136834924112
       vertices: []
       indices: 
       edges: []
@@ -1866,6 +1492,160 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c4d2fa7d02fe814692d3a0c6bc39585
+      internalID: -159847747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98f48067e84c028499c687b6144a95b3
+      internalID: -236686033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86ad031cd5c19a1488b157e7da9b1ad0
+      internalID: -1529125016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 516c0fe664eca5c478638bbcd69bf327
+      internalID: -1649838703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7a4703f78bd9f84db1fb6655199a247
+      internalID: 1867655685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d827f3699fa31f54a9fedf740e43eea4
+      internalID: 285666274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skier Female Sheet_47
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94f7e336ae199646a5cd367efd059d4
+      internalID: -574630439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -1915,9 +1695,16 @@ TextureImporter:
       Skier Female Sheet_36: 4529886736682579632
       Skier Female Sheet_37: 8192028503057512237
       Skier Female Sheet_38: 2726540136834924112
+      Skier Female Sheet_39: -159847747
       Skier Female Sheet_4: 8114097852172354741
+      Skier Female Sheet_40: -236686033
+      Skier Female Sheet_41: -1529125016
+      Skier Female Sheet_42: -1649838703
+      Skier Female Sheet_43: 1867655685
+      Skier Female Sheet_44: 285666274
       Skier Female Sheet_45: -1312658558303716278
       Skier Female Sheet_46: 5431842138811769269
+      Skier Female Sheet_47: -574630439
       Skier Female Sheet_5: -538036664553749014
       Skier Female Sheet_53: -4860795027811801764
       Skier Female Sheet_54: -3143456431996678393
