@@ -1,3 +1,5 @@
+// ----- PlayerCrash.cs START -----
+
 using UnityEngine;
 
 public class PlayerCrash : MonoBehaviour
@@ -6,7 +8,18 @@ public class PlayerCrash : MonoBehaviour
     {
         var gm = GameManager.Instance;
 
-        // TREE: always crash unless high jump
+        // === MOGUL ===
+        var mogul = collision.gameObject.GetComponent<Mogul>();
+        if (mogul != null)
+        {
+            if (gm.CurrentJumpState == GameManager.JumpState.Grounded)
+            {
+                gm.TriggerSlow(mogul.slowMultiplier, mogul.slowDuration);
+            }
+            return;
+        }
+
+        // === TREE ===
         if (collision.gameObject.GetComponent<Tree>() != null)
         {
             if (gm.CurrentJumpState == GameManager.JumpState.HighJump)
@@ -16,6 +29,7 @@ public class PlayerCrash : MonoBehaviour
             return;
         }
 
+        // === ROCK ===
         if (collision.gameObject.GetComponent<Rock>() != null)
         {
             if (gm.CurrentJumpState != GameManager.JumpState.Grounded)
@@ -28,6 +42,7 @@ public class PlayerCrash : MonoBehaviour
             return;
         }
 
+        // === STUMP ===
         if (collision.gameObject.GetComponent<Stump>() != null)
         {
             if (gm.CurrentJumpState != GameManager.JumpState.Grounded)
@@ -40,20 +55,28 @@ public class PlayerCrash : MonoBehaviour
             return;
         }
 
-
-        // JUMP PAD
+        // === JUMP PAD ===
         var pad = collision.gameObject.GetComponent<JumpPad>();
         if (pad != null)
         {
             gm.StartHighJump();
 
-            // Disable collider so it can't retrigger
             var col = collision.gameObject.GetComponent<Collider2D>();
             if (col != null)
                 col.enabled = false;
 
             return;
         }
+    }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        var npc = other.GetComponent<NPCSkierController>();
+        if (npc != null)
+        {
+            GameManager.Instance.TriggerCrash(1.0f);
+        }
     }
 }
+
+// ----- PlayerCrash.cs END -----

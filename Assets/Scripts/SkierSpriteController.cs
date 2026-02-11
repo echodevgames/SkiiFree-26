@@ -1,3 +1,5 @@
+// ----- SkierSpriteController.cs START -----
+
 using UnityEngine;
 
 public class SkierSpriteController : MonoBehaviour
@@ -51,3 +53,4 @@ public class SkierSpriteController : MonoBehaviour
         sr.sprite = directionSprites[spriteIndex];
     }
 }
+// ----- SkierSpriteController.cs START -----

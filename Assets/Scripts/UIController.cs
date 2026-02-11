@@ -1,3 +1,7 @@
+// ----- UIController.cs START -----
+
+
+
 using UnityEngine;
 
 public class UIController : MonoBehaviour
@@ -7,18 +11,20 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0f;
         ShowMenu();
     }
 
     void Update()
     {
-        // Quit on Escape
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            QuitGame();
+            if (GameManager.Instance.CurrentGameState == GameManager.GameState.Menu)
+                QuitGame();
+            else
+                ShowMenu(); // future pause menu hook
         }
     }
+
 
     public void OnPlayPressed()
     {
@@ -28,6 +34,7 @@ public class UIController : MonoBehaviour
 
     void ShowMenu()
     {
+        Time.timeScale = 0f;
         menuPanel.SetActive(true);
     }
 
@@ -42,3 +49,5 @@ public class UIController : MonoBehaviour
 #endif
     }
 }
+// ----- UIController.cs END -----
+

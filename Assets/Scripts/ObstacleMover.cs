@@ -1,3 +1,7 @@
+// ----- ObstacleMover.cs START -----
+
+
+
 using UnityEngine;
 
 public class ObstacleMover : MonoBehaviour
@@ -33,3 +37,5 @@ public class ObstacleMover : MonoBehaviour
         transform.position += move;
     }
 }
+// ----- ObstacleMover.cs END -----
+

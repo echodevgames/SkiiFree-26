@@ -1,4 +1,4 @@
-﻿// ---GameFlowController.cs START---
+﻿// ----- GameFlowController.cs START -----
 
 
 using UnityEngine;
@@ -61,4 +61,4 @@ public class GameFlowController : MonoBehaviour
             yield return null;
     }
 }
-// ---GameFlowController.cs END---
+// ----- GameFlowController.cs END -----
