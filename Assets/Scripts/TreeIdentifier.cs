@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tree : MonoBehaviour
+public class TreeIdentifier : MonoBehaviour
 {
     // Marker component – no code needed
 }
