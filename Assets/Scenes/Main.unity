@@ -2206,35 +2206,35 @@ PrefabInstance:
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'leftTurnSprites.Array.data[0]'
       value: 
-      objectReference: {fileID: 8367099837633103993, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: -1281817251952399841, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'leftTurnSprites.Array.data[1]'
       value: 
-      objectReference: {fileID: 9060217853395082599, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: 1099857781071669785, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'leftTurnSprites.Array.data[2]'
       value: 
-      objectReference: {fileID: 2602687097951567441, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: -6634403068202070670, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'leftTurnSprites.Array.data[3]'
       value: 
-      objectReference: {fileID: -7943374149870194953, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: 1008365287516585382, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'rightTurnSprites.Array.data[0]'
       value: 
-      objectReference: {fileID: -5078740068918600643, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: -2668114476901285519, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'rightTurnSprites.Array.data[1]'
       value: 
-      objectReference: {fileID: -431064366312620196, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: -3866726834419324775, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'rightTurnSprites.Array.data[2]'
       value: 
-      objectReference: {fileID: -516373789565988139, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: 8853327323518986252, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: 'rightTurnSprites.Array.data[3]'
       value: 
-      objectReference: {fileID: 3752995397943153591, guid: 444c969eae72dd74d9b303eb110cd350, type: 3}
+      objectReference: {fileID: -638493727118246527, guid: 91f7fb4f2180c1a449c8d5d92aa6d342, type: 3}
     - target: {fileID: 8920020235408525134, guid: 5203212aba0956e42813c961862c7452, type: 3}
       propertyPath: spinFrames.Array.data[0].sprite
       value: 

@@ -1,5 +1,4 @@
 // ----- SlalomFlag.cs START -----
-
 using UnityEngine;
 
 public enum SlalomSide
@@ -10,33 +9,26 @@ public enum SlalomSide
 
 public class SlalomFlag : MonoBehaviour
 {
-    [Header("Slalom Rules")]
     public SlalomSide requiredSide;
     public float scoreValue = 150f;
     public float xTolerance = 0.15f;
 
-    float aliveTime;
     bool evaluated;
 
     void Update()
     {
-        aliveTime += Time.deltaTime;
-
-        // ⏱ ensure flag exists long enough to be seen
-        if (evaluated || aliveTime < 5.55f)
+        if (evaluated)
             return;
 
         var gm = GameManager.Instance;
         if (gm == null)
             return;
 
-        // Player passed vertically
+        // Player has passed flag vertically
         if (transform.position.y < gm.transform.position.y - 0.1f)
-
         {
             Evaluate(gm.transform.position.x);
             evaluated = true;
-            Destroy(gameObject);
         }
     }
 
@@ -50,15 +42,7 @@ public class SlalomFlag : MonoBehaviour
                 : dx > xTolerance;
 
         if (success)
-        {
             GameManager.Instance.AddStyleScore(scoreValue);
-            Debug.Log($"[SLALOM] Success ({requiredSide}) +{scoreValue}");
-        }
-        else
-        {
-            Debug.Log($"[SLALOM] Missed ({requiredSide})");
-        }
     }
 }
-
 // ----- SlalomFlag.cs END -----

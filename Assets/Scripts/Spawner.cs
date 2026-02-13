@@ -1,5 +1,4 @@
 // ----- Spawner.cs START -----
-
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -14,123 +13,162 @@ public class Spawner : MonoBehaviour
     [Header("Slalom")]
     public GameObject leftFlagPrefab;
     public GameObject rightFlagPrefab;
-    public float slalomSpawnYOffset = -10f; // 👈 IMPORTANT
 
-    [Header("Timing")]
+    [Tooltip("How far from center before slalom starts")]
+    public float slalomActivationX = 2.5f;
+
+    [Tooltip("How close to center before slalom stops")]
+    public float slalomDeactivateX = 1.0f;
+
+    [Tooltip("Offset from slalom center line")]
+    public float slalomOffsetX = 2.5f;
+
+    [Tooltip("Spawn Y ahead of camera")]
+    public float slalomSpawnY = -10f;
+
+    [Tooltip("Time between slalom flags")]
+    public float slalomSpawnInterval = 1.25f;
+
+    [Header("Virtual Lateral Drift")]
+    public float lateralDriftSpeed = 1.0f;
+    public float recenterSpeed = 0.6f;
+
+    [Header("Normal Spawning")]
     public float spawnRate = 1f;
-
-    [Header("Positioning")]
     public float spawnWidth = 6f;
     public float spawnY = -6f;
 
-    [Header("Clumping")]
-    public float clumpChance = 0.25f;
-    public Vector2Int clumpSizeRange = new Vector2Int(3, 6);
-    public float clumpSpreadX = 1.2f;
-    public float clumpSpreadY = 0.8f;
+    float obstacleTimer;
+    float slalomTimer;
 
-    float timer;
+    // 🔑 Virtual lateral position (NOT player transform)
+    float virtualPlayerX;
+
+    bool slalomActive;
+    float slalomCenterX;
+    SlalomSide nextSlalomSide = SlalomSide.Left;
 
     void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= spawnRate)
-        {
-            timer = 0f;
-
-            float x = Random.Range(-spawnWidth, spawnWidth);
-            GameObject prefabToSpawn = ChoosePrefab();
-
-            float y = spawnY;
-
-            // 🚩 Slalom flags spawn farther ahead
-            if (prefabToSpawn == leftFlagPrefab || prefabToSpawn == rightFlagPrefab)
-                y = slalomSpawnYOffset;
-
-            Vector3 spawnPos = new Vector3(x, y, 0f);
-
-            if (ShouldSpawnClump(prefabToSpawn))
-            {
-                int count = Random.Range(clumpSizeRange.x, clumpSizeRange.y + 1);
-                SpawnUtility.SpawnClump(
-                    prefabToSpawn,
-                    spawnPos,
-                    count,
-                    clumpSpreadX,
-                    clumpSpreadY
-                );
-            }
-            else
-            {
-                Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);
-            }
-        }
-    }
-
-    GameObject ChoosePrefab()
-    {
         var gm = GameManager.Instance;
         if (gm == null)
-            return treePrefab;
+            return;
 
-        float lateral = gm.LateralFactor * gm.HeadingDirection;
-        float absLat = Mathf.Abs(lateral);
+        // =============================
+        // VIRTUAL LATERAL DRIFT
+        // =============================
+        float lateralIntent =
+            gm.LateralFactor *
+            gm.HeadingDirection; // -1 → +1 intent
 
-        // =========================
-        // BASELINE SLALOM SPAWN
-        // =========================
-        if (Random.value < 0.18f)
+        // Steering drift
+        virtualPlayerX +=
+            lateralIntent *
+            lateralDriftSpeed *
+            gm.CurrentScrollSpeed *
+            Time.deltaTime;
+
+        // Natural recentering when not steering
+        if (Mathf.Abs(lateralIntent) < 0.05f)
         {
-            if (lateral > 0.15f)
-                return rightFlagPrefab;
-
-            if (lateral < -0.15f)
-                return leftFlagPrefab;
-
-            return Random.value < 0.5f
-                ? leftFlagPrefab
-                : rightFlagPrefab;
+            virtualPlayerX = Mathf.MoveTowards(
+                virtualPlayerX,
+                0f,
+                recenterSpeed * gm.CurrentScrollSpeed * Time.deltaTime
+            );
         }
 
-        // =========================
-        // STRONG DIRECTION BIAS
-        // =========================
-        if (lateral > 0.45f && Random.value < 0.35f)
-            return rightFlagPrefab;
+        float absX = Mathf.Abs(virtualPlayerX);
 
-        if (lateral < -0.45f && Random.value < 0.35f)
-            return leftFlagPrefab;
+        // =============================
+        // SLALOM STATE
+        // =============================
+        if (!slalomActive && absX >= slalomActivationX)
+        {
+            slalomActive = true;
+            slalomCenterX = virtualPlayerX;
+            slalomTimer = 0f;
+            nextSlalomSide = SlalomSide.Left;
 
-        // =========================
-        // CENTER = JUMPS
-        // =========================
-        if (absLat < 0.2f && Random.value < 0.25f)
-            return jumpPadPrefab;
+            Debug.Log($"[SLALOM] Activated at X={slalomCenterX:F2}");
+        }
+        else if (slalomActive && absX <= slalomDeactivateX)
+        {
+            slalomActive = false;
+            Debug.Log("[SLALOM] Deactivated");
+        }
 
-        // =========================
-        // FALLBACK RANDOM
-        // =========================
+        // =============================
+        // SLALOM SPAWNING
+        // =============================
+        if (slalomActive)
+        {
+            slalomTimer += Time.deltaTime;
+            if (slalomTimer >= slalomSpawnInterval)
+            {
+                slalomTimer = 0f;
+                SpawnSlalomFlag();
+            }
+            return;
+        }
+
+        // =============================
+        // NORMAL OBSTACLES
+        // =============================
+        obstacleTimer += Time.deltaTime;
+        if (obstacleTimer >= spawnRate)
+        {
+            obstacleTimer = 0f;
+            SpawnObstacle();
+        }
+    }
+
+    void SpawnSlalomFlag()
+    {
+        GameObject prefab =
+            nextSlalomSide == SlalomSide.Left
+                ? leftFlagPrefab
+                : rightFlagPrefab;
+
+        float x =
+            nextSlalomSide == SlalomSide.Left
+                ? slalomCenterX - slalomOffsetX
+                : slalomCenterX + slalomOffsetX;
+
+        GameObject flag = Instantiate(
+            prefab,
+            new Vector3(x, slalomSpawnY, 0f),
+            Quaternion.identity
+        );
+
+        flag.GetComponent<SlalomFlag>().requiredSide = nextSlalomSide;
+
+        // STRICT alternation (design rule)
+        nextSlalomSide =
+            nextSlalomSide == SlalomSide.Left
+                ? SlalomSide.Right
+                : SlalomSide.Left;
+    }
+
+    void SpawnObstacle()
+    {
+        float x = Random.Range(-spawnWidth, spawnWidth);
+        Instantiate(
+            ChooseObstacle(),
+            new Vector3(x, spawnY, 0f),
+            Quaternion.identity
+        );
+    }
+
+    GameObject ChooseObstacle()
+    {
         float roll = Random.value;
 
-        if (roll < 0.45f)
-            return treePrefab;
-        else if (roll < 0.65f)
-            return mogulPrefab;
-        else if (roll < 0.8f)
-            return rockPrefab;
-        else if (roll < 0.9f)
-            return stumpPrefab;
-        else
-            return jumpPadPrefab;
-    }
-
-    bool ShouldSpawnClump(GameObject prefab)
-    {
-        // ❌ Flags never clump
-        return (prefab == treePrefab || prefab == mogulPrefab)
-            && Random.value < clumpChance;
+        if (roll < 0.45f) return treePrefab;
+        if (roll < 0.65f) return mogulPrefab;
+        if (roll < 0.8f) return rockPrefab;
+        if (roll < 0.9f) return stumpPrefab;
+        return jumpPadPrefab;
     }
 }
-
 // ----- Spawner.cs END -----
