@@ -1,3 +1,5 @@
+// -----NPCSpawner.cs START-----
+
 using UnityEngine;
 
 public class NPCSpawner : MonoBehaviour
@@ -43,3 +45,5 @@ public class NPCSpawner : MonoBehaviour
 
     }
 }
+
+// -----NPCSpawner.cs END-----

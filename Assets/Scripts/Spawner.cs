@@ -1,12 +1,20 @@
+// ----- Spawner.cs START -----
+
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    [Header("Obstacles")]
     public GameObject treePrefab;
     public GameObject rockPrefab;
     public GameObject stumpPrefab;
     public GameObject jumpPadPrefab;
     public GameObject mogulPrefab;
+
+    [Header("Slalom")]
+    public GameObject leftFlagPrefab;
+    public GameObject rightFlagPrefab;
+    public float slalomSpawnYOffset = -10f; // 👈 IMPORTANT
 
     [Header("Timing")]
     public float spawnRate = 1f;
@@ -21,7 +29,6 @@ public class Spawner : MonoBehaviour
     public float clumpSpreadX = 1.2f;
     public float clumpSpreadY = 0.8f;
 
-
     float timer;
 
     void Update()
@@ -33,9 +40,15 @@ public class Spawner : MonoBehaviour
             timer = 0f;
 
             float x = Random.Range(-spawnWidth, spawnWidth);
-            Vector3 spawnPos = new Vector3(x, spawnY, 0);
-
             GameObject prefabToSpawn = ChoosePrefab();
+
+            float y = spawnY;
+
+            // 🚩 Slalom flags spawn farther ahead
+            if (prefabToSpawn == leftFlagPrefab || prefabToSpawn == rightFlagPrefab)
+                y = slalomSpawnYOffset;
+
+            Vector3 spawnPos = new Vector3(x, y, 0f);
 
             if (ShouldSpawnClump(prefabToSpawn))
             {
@@ -57,6 +70,47 @@ public class Spawner : MonoBehaviour
 
     GameObject ChoosePrefab()
     {
+        var gm = GameManager.Instance;
+        if (gm == null)
+            return treePrefab;
+
+        float lateral = gm.LateralFactor * gm.HeadingDirection;
+        float absLat = Mathf.Abs(lateral);
+
+        // =========================
+        // BASELINE SLALOM SPAWN
+        // =========================
+        if (Random.value < 0.18f)
+        {
+            if (lateral > 0.15f)
+                return rightFlagPrefab;
+
+            if (lateral < -0.15f)
+                return leftFlagPrefab;
+
+            return Random.value < 0.5f
+                ? leftFlagPrefab
+                : rightFlagPrefab;
+        }
+
+        // =========================
+        // STRONG DIRECTION BIAS
+        // =========================
+        if (lateral > 0.45f && Random.value < 0.35f)
+            return rightFlagPrefab;
+
+        if (lateral < -0.45f && Random.value < 0.35f)
+            return leftFlagPrefab;
+
+        // =========================
+        // CENTER = JUMPS
+        // =========================
+        if (absLat < 0.2f && Random.value < 0.25f)
+            return jumpPadPrefab;
+
+        // =========================
+        // FALLBACK RANDOM
+        // =========================
         float roll = Random.value;
 
         if (roll < 0.45f)
@@ -73,8 +127,10 @@ public class Spawner : MonoBehaviour
 
     bool ShouldSpawnClump(GameObject prefab)
     {
-        // Trees + Moguls can clump
+        // ❌ Flags never clump
         return (prefab == treePrefab || prefab == mogulPrefab)
             && Random.value < clumpChance;
     }
 }
+
+// ----- Spawner.cs END -----

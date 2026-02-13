@@ -1,3 +1,5 @@
+// -----NPCSkierController.cs START-----
+
 using System.Threading;
 using UnityEngine;
 
@@ -48,3 +50,4 @@ public class NPCSkierController : MonoBehaviour
 
     }
 }
+// -----NPCSkierController.cs END-----

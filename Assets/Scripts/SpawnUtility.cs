@@ -1,3 +1,5 @@
+// ----- SpawnUtility.cs START -----
+
 using UnityEngine;
 
 public static class SpawnUtility
@@ -20,3 +22,4 @@ public static class SpawnUtility
         }
     }
 }
+// ----- SpawnUtility.cs END -----

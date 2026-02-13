@@ -13,7 +13,8 @@ public class GameFlowController : MonoBehaviour
 
     void Awake()
     {
-        if (FindObjectsOfType<GameFlowController>().Length > 1)
+        if (FindObjectsByType<GameFlowController>(FindObjectsSortMode.None).Length > 1)
+
         {
             Destroy(gameObject);
             return;
