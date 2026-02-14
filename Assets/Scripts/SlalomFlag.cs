@@ -10,24 +10,31 @@ public enum SlalomSide
 public class SlalomFlag : MonoBehaviour
 {
     public SlalomSide requiredSide;
+
+    [Header("Scoring")]
     public float scoreValue = 150f;
     public float xTolerance = 0.15f;
 
+    Transform player;
     bool evaluated;
+
+    void Start()
+    {
+        // Find player once (cheap + safe)
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+            player = playerObj.transform;
+    }
 
     void Update()
     {
-        if (evaluated)
-            return;
-
-        var gm = GameManager.Instance;
-        if (gm == null)
+        if (evaluated || player == null)
             return;
 
         // Player has passed flag vertically
-        if (transform.position.y < gm.transform.position.y - 0.1f)
+        if (player.position.y < transform.position.y - 0.1f)
         {
-            Evaluate(gm.transform.position.x);
+            Evaluate(player.position.x);
             evaluated = true;
         }
     }
@@ -42,7 +49,9 @@ public class SlalomFlag : MonoBehaviour
                 : dx > xTolerance;
 
         if (success)
+        {
             GameManager.Instance.AddStyleScore(scoreValue);
+        }
     }
 }
 // ----- SlalomFlag.cs END -----

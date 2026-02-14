@@ -9,22 +9,33 @@ public class LiftSpawner : MonoBehaviour
     public float spawnX = 3.5f;   // fixed horizontal location
     public float spawnY = -6f;
 
-    float timer;
+    
+    float distanceAccumulator;
 
     void Update()
     {
-        if (GameManager.Instance.CurrentGameState != GameManager.GameState.Playing)
+        var gm = GameManager.Instance;
+
+        if (gm == null || gm.CurrentGameState != GameManager.GameState.Playing)
             return;
 
-        timer += Time.deltaTime;
+        if (gm.CurrentScrollSpeed <= 0f)
+            return;
 
-        if (timer >= spawnInterval)
+        distanceAccumulator += gm.CurrentScrollSpeed * Time.deltaTime;
+
+        // meters between lift segments
+        float metersPerLift = 14f;
+
+        if (distanceAccumulator >= metersPerLift)
         {
-            timer = 0f;
+            distanceAccumulator -= metersPerLift;
 
             Vector3 pos = new Vector3(spawnX, spawnY, 0);
             Instantiate(liftSegmentPrefab, pos, Quaternion.identity);
         }
     }
+
+
 }
 // ----- LiftSpawner.cs END -----
