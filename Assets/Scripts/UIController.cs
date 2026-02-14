@@ -1,13 +1,21 @@
 // ----- UIController.cs START -----
-
-
-
 using UnityEngine;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
     [Header("UI Panels")]
-    public GameObject menuPanel;   // Panel with Play button
+    public GameObject menuPanel;
+
+    [Header("HUD Text")]
+    public TMP_Text timeText;
+    public TMP_Text distanceText;
+    public TMP_Text speedText;
+    public TMP_Text styleText;
+
+    [Header("Distance Tuning")]
+    [Tooltip("Meters gained per second at base speed")]
+    public float distanceMultiplier = 1f;
 
     void Start()
     {
@@ -16,16 +24,48 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        var gm = GameManager.Instance;
+        if (gm == null)
+            return;
+
+        // ---------- HUD UPDATE ----------
+        if (gm.CurrentGameState == GameManager.GameState.Playing)
+        {
+            UpdateHUD(gm);
+        }
+
+        // ---------- MENU INPUT ----------
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameManager.Instance.CurrentGameState == GameManager.GameState.Menu)
+            if (gm.CurrentGameState == GameManager.GameState.Menu)
                 QuitGame();
             else
-                ShowMenu(); // future pause menu hook
+                ShowMenu(); // pause hook later
         }
     }
 
+    void UpdateHUD(GameManager gm)
+    {
+        // Time
+        timeText.text = $"{gm.RunTime:00.0}";
 
+        // Distance (classic SkiFree feel)
+        float distance =
+            gm.RunTime *
+            gm.CurrentScrollSpeed *
+            distanceMultiplier;
+
+        distanceText.text = $"{Mathf.FloorToInt(distance)}m";
+
+        // Speed
+        speedText.text = $"{gm.DisplaySpeed:0.0} m/s";
+
+
+        // Style
+        styleText.text = $"{Mathf.FloorToInt(gm.StyleScore)}";
+    }
+
+    // ---------- BUTTONS ----------
     public void OnPlayPressed()
     {
         menuPanel.SetActive(false);
@@ -50,4 +90,3 @@ public class UIController : MonoBehaviour
     }
 }
 // ----- UIController.cs END -----
-

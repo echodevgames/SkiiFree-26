@@ -20,6 +20,21 @@ public class GameManager : MonoBehaviour
     float currentSpeed;
     float smoothedHeadingPenalty = 1f;
 
+    public float DisplaySpeed => IsCrashed ? 0f : currentSpeed;
+
+    // ================== SCOOT ==================
+    // Holding SAME direction while fully sideways generates periodic scoot "bumps".
+    // OPPOSITE direction starts turning back downhill.
+    public float ScootIntent { get; private set; }   // -1, 0, +1
+    public bool ScootBump { get; private set; }      // true for one frame when a bump fires
+
+    [Header("Scoot Tuning")]
+    [Tooltip("Seconds between scoot bumps when holding direction at 90°")]
+    public float scootBumpInterval = 0.14f;
+
+    // internal timer for bump cadence
+    float scootBumpTimer;
+
     // ================== HEADING ==================
     [Header("Heading (degrees)")]
     public float[] headingSteps = { 0f, 15f, 45f, 65f, 90f };
@@ -50,8 +65,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Spin sprites in clockwise order starting at 0°")]
     public SpinFrame[] spinFrames;
 
-    float spinAngle;                 // visual angle (0–360)
-    float accumulatedSpinAngle;      // unlimited, used for scoring/debug
+    float spinAngle;
+    float accumulatedSpinAngle;
     public int SpinFrameIndex { get; private set; }
 
     [Header("Spin Debug")]
@@ -103,21 +118,9 @@ public class GameManager : MonoBehaviour
     public float CurrentScrollSpeed => currentSpeed;
     public float LateralFactor => HeadingDegrees / 90f;
 
-
     // ================== SCORE API ==================
-    public void AddStyleScore(float amount)
-    {
-        StyleScore += amount;
-    }
-
-    public void AddSpeedScore(float amount)
-    {
-        SpeedScore += amount;
-    }
-
-
-
-
+    public void AddStyleScore(float amount) => StyleScore += amount;
+    public void AddSpeedScore(float amount) => SpeedScore += amount;
 
     // ================== UNITY ==================
     void Awake()
@@ -135,26 +138,87 @@ public class GameManager : MonoBehaviour
         if (CurrentGameState != GameState.Playing || IsCrashed)
             return;
 
+        // reset each frame
+        ScootIntent = 0f;
+        ScootBump = false;
+
         // ---------- TIME ----------
         RunTime += Time.deltaTime;
 
         // ---------- INPUT ----------
         if (CurrentJumpState == JumpState.Grounded)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-                StepHeading(-1);
+            bool leftDown = Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A);
+            bool rightDown = Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D);
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-                StepHeading(1);
+            bool leftHeld = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
+            bool rightHeld = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
+
+            bool fullySideways = HeadingDegrees >= 90f;
+
+            if (!fullySideways)
+            {
+                // leaving sideways -> reset scoot cadence
+                scootBumpTimer = 0f;
+
+                if (leftDown) StepHeading(-1);
+                if (rightDown) StepHeading(1);
+            }
+            else
+            {
+                // Fully sideways: opposite press turns downhill.
+                // Holding same direction produces periodic bumps.
+
+                if (HeadingDirection >= 0)
+                {
+                    // sideways-right
+                    if (leftDown)
+                    {
+                        // turn back downhill
+                        scootBumpTimer = 0f;
+                        StepHeading(-1);
+                    }
+                    else if (rightHeld)
+                    {
+                        ScootIntent = 1f;
+                        TickScootBump();
+                    }
+                    else
+                    {
+                        scootBumpTimer = 0f;
+                    }
+                }
+                else
+                {
+                    // sideways-left
+                    if (rightDown)
+                    {
+                        scootBumpTimer = 0f;
+                        StepHeading(1);
+                    }
+                    else if (leftHeld)
+                    {
+                        ScootIntent = -1f;
+                        TickScootBump();
+                    }
+                    else
+                    {
+                        scootBumpTimer = 0f;
+                    }
+                }
+            }
         }
         else
         {
+            // In air: spin input
             float spinInput =
                 (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D) ? 1f : 0f) -
                 (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) ? 1f : 0f);
 
             if (spinInput != 0f)
                 ApplySpin(spinInput);
+
+            scootBumpTimer = 0f;
         }
 
         // ---------- SPEED ----------
@@ -210,6 +274,18 @@ public class GameManager : MonoBehaviour
             StartJump();
     }
 
+    void TickScootBump()
+    {
+        scootBumpTimer += Time.deltaTime;
+
+        if (scootBumpTimer >= scootBumpInterval)
+        {
+            // allow "catch up" but don’t spam multiple bumps in one frame
+            scootBumpTimer -= scootBumpInterval;
+            ScootBump = true;
+        }
+    }
+
     // ================== GAME FLOW ==================
     public void StartGame()
     {
@@ -231,7 +307,10 @@ public class GameManager : MonoBehaviour
         currentSpeed = minSpeed;
         smoothedHeadingPenalty = 1f;
 
-        // scores/time reset
+        ScootIntent = 0f;
+        ScootBump = false;
+        scootBumpTimer = 0f;
+
         RunTime = 0f;
         SpeedScore = 0f;
         StyleScore = 0f;
@@ -253,7 +332,6 @@ public class GameManager : MonoBehaviour
             HeadingDirection = 0;
     }
 
-    // ================== SPIN ==================
     void ApplySpin(float direction)
     {
         if (spinFrames == null || spinFrames.Length == 0)
@@ -267,19 +345,8 @@ public class GameManager : MonoBehaviour
         float degreesPerFrame = 360f / spinFrames.Length;
         SpinFrameIndex = Mathf.FloorToInt(spinAngle / degreesPerFrame);
         SpinFrameIndex = Mathf.Clamp(SpinFrameIndex, 0, spinFrames.Length - 1);
-
-        if (logSpinDebug)
-        {
-            Debug.Log(
-                $"[SPIN] Accumulated: {accumulatedSpinAngle:F1}° | " +
-                $"Visual: {spinAngle:F1}° | " +
-                $"Spins: {(accumulatedSpinAngle / 360f):F2} | " +
-                $"Frame: {SpinFrameIndex}"
-            );
-        }
     }
 
-    // ================== JUMP ==================
     public void StartJump()
     {
         cachedHeadingIndex = HeadingIndex;
@@ -316,37 +383,6 @@ public class GameManager : MonoBehaviour
     {
         CurrentJumpState = JumpState.Grounded;
 
-        float degreesPerFrame = 360f / spinFrames.Length;
-        float snappedAngle = SpinFrameIndex * degreesPerFrame;
-        if (snappedAngle > 180f)
-            snappedAngle -= 360f;
-
-        float landingAngle = Mathf.Abs(snappedAngle);
-        float totalSpins = Mathf.Abs(accumulatedSpinAngle) / 360f;
-
-        // ---------- STYLE SCORE ----------
-        if (totalSpins > 0f)
-            AddStyleScore(totalSpins * pointsPerSpin);
-
-        if (landingAngle <= cleanLandingMaxAngle)
-            AddStyleScore(cleanLandingBonus);
-
-        Debug.Log(
-            $"[LANDING] Spins: {totalSpins:F2} | " +
-            $"Snapped: {snappedAngle:F1}° | " +
-            $"LandingAngle: {landingAngle:F1}° | " +
-            $"StyleScore: {StyleScore:F0}"
-        );
-
-        if (landingAngle > sloppyLandingMaxAngle)
-        {
-            TriggerCrash(1f);
-            return;
-        }
-
-        if (landingAngle > cleanLandingMaxAngle)
-            TriggerSlow(sloppyLandingSlow, sloppyLandingDuration);
-
         HeadingIndex = cachedHeadingIndex;
         HeadingDirection = cachedHeadingDirection;
 
@@ -355,7 +391,6 @@ public class GameManager : MonoBehaviour
         SpinFrameIndex = 0;
     }
 
-    // ================== EFFECTS ==================
     public void TriggerSlow(float multiplier, float duration)
     {
         speedMultiplier = Mathf.Clamp(multiplier, 0.05f, 1f);
@@ -368,18 +403,13 @@ public class GameManager : MonoBehaviour
             return;
 
         IsCrashed = true;
-
-        // penalty on crash
         SpeedScore *= 0.5f;
 
         ResetSpeedRamp();
         Invoke(nameof(RecoverFromCrash), duration);
     }
 
-    void RecoverFromCrash()
-    {
-        IsCrashed = false;
-    }
+    void RecoverFromCrash() => IsCrashed = false;
 
     void ResetSpeedRamp()
     {
@@ -388,29 +418,6 @@ public class GameManager : MonoBehaviour
         speedMultiplier = 1f;
         speedMultTimer = 0f;
     }
-
-    void OnGUI()
-    {
-        if (CurrentGameState != GameState.Playing)
-            return;
-
-        // Background box
-        GUI.Box(new Rect(8, 8, 340, 220), "");
-
-        // White text style
-        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
-        labelStyle.normal.textColor = Color.white;
-        labelStyle.fontSize = 14;
-
-        GUILayout.BeginArea(new Rect(16, 16, 320, 200));
-        GUILayout.Label($"Time: {RunTime:F1}s", labelStyle);
-        GUILayout.Label($"Speed: {currentSpeed:F2} (target {targetSpeed:F2})", labelStyle);
-        GUILayout.Label($"SpeedScore: {SpeedScore:F0}", labelStyle);
-        GUILayout.Label($"StyleScore: {StyleScore:F0}", labelStyle);
-        GUILayout.Label($"Total: {TotalScore}", labelStyle);
-        GUILayout.EndArea();
-    }
-
 }
 
 // ----- GameManager.cs END -----

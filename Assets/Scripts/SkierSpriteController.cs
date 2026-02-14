@@ -9,14 +9,23 @@ public class SkierSpriteController : MonoBehaviour
     public Sprite[] rightTurnSprites; // ordered outward from center
     public Sprite[] leftTurnSprites;  // ordered outward from center
 
+    [Header("Scoot Sprites")]
+    public Sprite rightScootSprite;
+    public Sprite leftScootSprite;
+
+    [Tooltip("How long the scoot sprite shows per bump")]
+    public float scootSpriteDuration = 0.07f;
+
     [Header("Spin Sprites (Angle-Labeled)")]
-    public SpinFrame[] spinFrames; // MUST match GameManager spinFrameCount
+    public SpinFrame[] spinFrames;
 
     [Header("Special Sprites")]
     public Sprite crashSprite;
     public Sprite bounceSprite;
 
     SpriteRenderer sr;
+
+    float scootSpriteTimer;
 
     void Awake()
     {
@@ -26,6 +35,8 @@ public class SkierSpriteController : MonoBehaviour
     void Update()
     {
         var gm = GameManager.Instance;
+        if (gm == null)
+            return;
 
         // 💥 CRASH
         if (gm.IsCrashed)
@@ -48,7 +59,35 @@ public class SkierSpriteController : MonoBehaviour
             return;
         }
 
-        // 🎿 GROUNDED
+        // ⛷️ SCOOT BUMP TRIGGER
+        if (gm.ScootBump)
+        {
+            scootSpriteTimer = scootSpriteDuration;
+        }
+
+
+        // ⛷️ SCOOT SPRITE DISPLAY
+        if (scootSpriteTimer > 0f)
+        {
+            scootSpriteTimer -= Time.deltaTime;
+
+            if (gm.HeadingDirection > 0 && rightScootSprite != null)
+            {
+                sr.sprite = rightScootSprite;
+            }
+            else if (gm.HeadingDirection < 0 && leftScootSprite != null)
+            {
+                sr.sprite = leftScootSprite;
+            }
+            else
+            {
+                sr.sprite = GetGroundedSprite(gm);
+            }
+
+            return;
+        }
+
+        // 🎿 NORMAL GROUNDED
         sr.sprite = GetGroundedSprite(gm);
     }
 

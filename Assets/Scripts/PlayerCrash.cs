@@ -20,7 +20,7 @@ public class PlayerCrash : MonoBehaviour
         }
 
         // === TREE ===
-        if (collision.gameObject.GetComponent<Tree>() != null)
+        if (collision.gameObject.GetComponent<TreeIdentifier>() != null)
         {
             if (gm.CurrentJumpState == GameManager.JumpState.HighJump)
                 return;
@@ -50,7 +50,6 @@ public class PlayerCrash : MonoBehaviour
                 gm.Bounce(gm.stumpBounceExtraTime);
                 return;
             }
-
             gm.TriggerCrash(1.0f);
             return;
         }
